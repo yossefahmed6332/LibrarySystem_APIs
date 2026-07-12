@@ -15,7 +15,7 @@ namespace LibrarySystem.Models
         public DateTime RegisterationDate { get; set; }
 
         // Many-to-many relation (PersonsAddresses in the diagram)
-        public Address Address { get; set; } = null!; 
-        public int AddressId { get; set; }
+        public ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
+        public ICollection<Operation> Operations { get; set; } = new HashSet<Operation>();
     }
 }

@@ -19,15 +19,12 @@ namespace LibrarySystem.Models
         public string Language { get; set; } = null!;
         public string Description { get; set; } = null!; 
 
-        // Relation to Author
-        public int AuthorId { get; set; }
-     
-        public Author Author { get; set; } = null!;
+        // Relation to Author     
+        public ICollection <Author> Authors { get; set; } = new HashSet<Author>();
 
         // Relation to Category
      
-        public int CategoryId { get; set; }
-        public Category Category { get; set; } = null!;
+        public ICollection<Category> Categories { get; set; } = null!;
 
         // A book can have multiple physical copies
         public ICollection<BookCopy> BookCopies { get; set; } = new List<BookCopy>();

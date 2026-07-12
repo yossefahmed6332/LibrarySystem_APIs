@@ -7,6 +7,5 @@ namespace LibrarySystem.Models
         public MembershipType MembershipType { get; set; }
 
         // Navigation: operations made by this customer (Borrow / Buy / Refund / Fine)
-        public ICollection<Operation> Operations { get; set; } = new List<Operation>();
     }
 }

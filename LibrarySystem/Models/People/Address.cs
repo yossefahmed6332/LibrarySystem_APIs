@@ -6,7 +6,7 @@ namespace LibrarySystem.Models
     {
         public int Id { get; set; }
         public string Country { get; set; } = null!;
-        public string State { get; set; } = null!;
+        public string? State { get; set; } 
         public string City { get; set; } = null!;
         public int StreetNum { get; set; }
         public int Building { get; set; }
@@ -14,7 +14,7 @@ namespace LibrarySystem.Models
         public string Flat { get; set; } = null!;
 
 
-        // Many-to-many relation (PersonsAddresses in the diagram)
-        public ICollection<Person>Persons { get; set; } = new List<Person>();
+        // one-to-many relation (PersonsAddresses in the diagram)
+        public Person? Person { get; set; } 
     }
 }
