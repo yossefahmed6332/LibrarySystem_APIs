@@ -21,8 +21,7 @@ namespace LibrarySystem.Data.Configurations
 
             //set relations 
             builder.HasMany(a => a.Books)
-                .WithMany(b => b.Authors)
-                .UsingEntity(j => j.ToTable("AuthorBooks")); // Specify the join table name
+                .WithOne(b => b.Author);
            
         }
     }

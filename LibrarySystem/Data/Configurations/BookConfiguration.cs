@@ -37,7 +37,7 @@ namespace LibrarySystem.Data.Configurations
 
             //Set relations
 
-           builder.HasMany(b => b.Categories)      // Relation to Category
+           builder.HasOne(b => b.Category)      // Relation to Category
                 .WithMany(c => c.Books);
            
         }
