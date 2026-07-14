@@ -17,9 +17,9 @@ namespace LibrarySystem.DTOs.BookDtos
         [Required, MaxLength(100)]
         public string Publisher { get; set; } = null!;
         [Required, MaxLength(50)]
-        public string Language { get; set; } = null!;   
-        [Required,MaxLength(1000)]
-        public string? Description { get; set; } 
+        public string Language { get; set; } = null!;
+        [Required, MaxLength(1000)]
+        public string Description { get; set; } = null!; 
         [Required]
         public int AuthorId { get; set; }
         [Required]
