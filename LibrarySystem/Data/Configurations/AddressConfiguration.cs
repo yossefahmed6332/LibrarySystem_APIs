@@ -22,6 +22,9 @@ namespace LibrarySystem.Data.Configurations
                 .IsRequired();
             builder.Property(a => a.Flat)
                 .HasMaxLength(30);
+            builder.Property(a=>a.StreetName)
+                .IsRequired()
+                .HasMaxLength(100);
 
             //set relations
             builder.HasOne(a => a.Person)         // Relation to Person

@@ -72,9 +72,10 @@ namespace LibrarySystem.Migrations
                     State = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     StreetNum = table.Column<int>(type: "int", nullable: false),
+                    StreetName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Building = table.Column<int>(type: "int", nullable: false),
                     Floor = table.Column<int>(type: "int", nullable: false),
-                    Flat = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Flat = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     PersonId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

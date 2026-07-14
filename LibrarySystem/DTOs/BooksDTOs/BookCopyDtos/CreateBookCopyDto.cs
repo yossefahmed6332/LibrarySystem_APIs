@@ -9,7 +9,7 @@ namespace LibrarySystem.DTOs.BookCopyDtos
         public string Barcode { get; set; } = null!;
         [Required]
         public decimal Price { get; set; }
-        [Required]
+        [Required, EnumDataType(typeof(Status))]
         public Status Status { get; set; } = Status.Available;
         [Required,Range(1,int.MaxValue)]
         public int BookId { get; set; }

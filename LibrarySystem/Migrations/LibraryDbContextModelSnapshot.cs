@@ -44,7 +44,6 @@ namespace LibrarySystem.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Flat")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -55,6 +54,11 @@ namespace LibrarySystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("State")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("StreetName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
