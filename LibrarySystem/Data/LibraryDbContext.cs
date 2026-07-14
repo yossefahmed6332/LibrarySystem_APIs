@@ -2,16 +2,16 @@
 using LibrarySystem.Models;
 namespace LibrarySystem.Data
 {
-    public class ApplicationDbContext:DbContext
+    public class LibraryDbContext:DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public LibraryDbContext(DbContextOptions<LibraryDbContext> options) : base(options)
         {
 
         }
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(LibraryDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
 
         }

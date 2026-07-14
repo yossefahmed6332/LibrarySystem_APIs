@@ -10,15 +10,9 @@ namespace LibrarySystem.Data.Configurations
             //set properties
             builder.Property(a => a.CustomerId)
                 .IsRequired();
-            builder.Property(a => a.Customer)
-                .IsRequired();
             builder.Property(a => a.EmployeeId)
                 .IsRequired();
-            builder.Property(a => a.Employee)
-                .IsRequired();
             builder.Property(a => a.BookCopyId)
-                .IsRequired();
-            builder.Property(a => a.BookCopy)
                 .IsRequired();
             builder.Property(a => a.DeadLine)
                 .IsRequired();

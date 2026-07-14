@@ -2,7 +2,7 @@
 
 namespace LibrarySystem.DTOs.BookDtos
 {
-    public class CreateBookDtocs
+    public class CreateBookDto
     {
         [Required, MaxLength(100)]
         public string Title { get; set; } = null!;

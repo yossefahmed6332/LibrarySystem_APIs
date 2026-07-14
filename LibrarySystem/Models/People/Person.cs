@@ -16,6 +16,5 @@ namespace LibrarySystem.Models
 
         // Many-to-many relation (PersonsAddresses in the diagram)
         public ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
-        public ICollection<Operation> Operations { get; set; } = new HashSet<Operation>();
     }
 }
