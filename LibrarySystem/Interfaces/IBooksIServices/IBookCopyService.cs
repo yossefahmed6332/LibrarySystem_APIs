@@ -8,7 +8,7 @@ namespace LibrarySystem.Interfaces
         public Task<IEnumerable<BookCopyDto>> GetBookCopiesByBookIdAsync(int bookId);
         public Task<BookCopyDto> CreateBookCopyAsync(CreateBookCopyDto bookCopyDto);
         public Task<BookCopyDto> UpdateBookCopyAsync(int id, UpdateBookCopyDto bookCopyDto);
-        public Task<bool> DeleteBookCopyAsync(int id);
+        public Task DeleteBookCopyAsync(int id);
 
     }
 }

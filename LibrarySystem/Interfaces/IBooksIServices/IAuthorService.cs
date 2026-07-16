@@ -8,6 +8,6 @@ namespace LibrarySystem.Interfaces
         public Task<AuthorDto> GetAuthorByNameAsync(string name);
         public Task<AuthorDto> CreateAuthorAsync(CreateAuthorDto authorDto);
         public Task<AuthorDto> UpdateAuthorAsync(int id, UpdateAuthorDto authorDto);
-        public Task<bool> DeleteAuthorAsync(int id);
+        public Task DeleteAuthorAsync(int id);
     }
 }

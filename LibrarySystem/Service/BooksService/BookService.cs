@@ -203,7 +203,7 @@ namespace LibrarySystem.Service.BookService
             await _context.SaveChangesAsync();
             return CreateBookDto(book);
         }
-        public async Task<bool> DeleteBookAsync(int id)
+        public async Task DeleteBookAsync(int id)
         {
             var book = await _context.TbBooks.FindAsync(id);
             if (book == null)
@@ -213,7 +213,6 @@ namespace LibrarySystem.Service.BookService
             _context.TbBooks.Remove(book);
             await _context.SaveChangesAsync();
 
-            return true;
         }
 
 

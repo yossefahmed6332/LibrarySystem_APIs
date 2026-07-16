@@ -10,6 +10,6 @@ namespace LibrarySystem.Interfaces
         public Task <IEnumerable<BookDto>> GetBooksByAuthorIdAsync(int authorId);
         public Task<BookDto> CreateBookAsync(CreateBookDto bookDto);
         public Task<BookDto> UpdateBookAsync(int id, UpdateBookDto bookDto);
-        public Task<bool> DeleteBookAsync(int id);
+        public Task DeleteBookAsync(int id);
     }
 }

@@ -73,7 +73,7 @@ namespace LibrarySystem.Service.BookService
             try
             {
                 var author = await _context.TbAuthors
-                    .Where(a => a.FirstName + " " + a.LastName == name)
+                    .Where(a => a.FirstName.ToLower() + " " + a.LastName.ToLower() == name.ToLower())
                     .Select(a => new AuthorDto
                     {
                         Id = a.Id,
@@ -145,7 +145,7 @@ namespace LibrarySystem.Service.BookService
                 Biography = author.Biography
             };
         }
-        public async Task<bool> DeleteAuthorAsync(int id)
+        public async Task DeleteAuthorAsync(int id)
         {
             var author = await _context.TbAuthors.FindAsync(id);
             if (author == null)
@@ -154,7 +154,6 @@ namespace LibrarySystem.Service.BookService
             }
             _context.TbAuthors.Remove(author);
             await _context.SaveChangesAsync();
-            return true;
 
         }
 
