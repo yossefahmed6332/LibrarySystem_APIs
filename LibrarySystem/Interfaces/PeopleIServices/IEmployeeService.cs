@@ -4,18 +4,21 @@ namespace LibrarySystem.Interfaces.PeopleServices
 {
     public interface IEmployeeService 
     {
-        Task<IEnumerable<EmployeeDto>> GetAllAsync();
+        public Task<IEnumerable<EmployeeDto>> GetAllEmployeesAsync();
 
-        Task<EmployeeDto?> GetByIdAsync(int id);
+        public Task<EmployeeDto> GetEmployeeByIdAsync(int id);
 
-        Task<EmployeeDto> CreateAsync(CreateEmployeeDto dto);
+        public Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto dto);
 
-        Task<EmployeeDto> UpdateAsync(int id, UpdateEmployeeDto dto);
+        public  Task<EmployeeDto> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto);
 
-        Task DeleteAsync(int id);
+        public Task DeleteEmployeeAsync(int id);
 
-        Task ChangeRoleAsync(int id, Role role);
+        public Task ChangeEmployeeRoleAsync(int id, Role role);
 
-        Task ChangeSalaryPerHourAsync(int id, decimal salary);
+        public Task ChangeEmployeeSalaryPerHourAsync(int id, decimal salary);
+
+        public Task ChangeEmployeeHoursWorked(int id, int hoursWorked);
     }
 }
+

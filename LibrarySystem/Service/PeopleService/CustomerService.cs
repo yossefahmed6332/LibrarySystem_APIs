@@ -8,9 +8,12 @@ namespace LibrarySystem.Service.PeopleService
     public class CustomerService : ICustomerService
     {
         private readonly LibraryDbContext _context;
-        public CustomerService(LibraryDbContext context)
+        private readonly IAddressService _addressService;
+
+        public CustomerService(LibraryDbContext context, IAddressService addressService)
         {
             _context = context;
+            _addressService = addressService;
         }
 
 
@@ -18,7 +21,7 @@ namespace LibrarySystem.Service.PeopleService
 
         public async Task< Address> GetAddressAsync(int id)
         {
-            var address = _context.TbAddresses.Where(a => a.Id == id).Select(a => new Address
+            var address = await _context.TbAddresses.Where(a => a.Id == id).Select(a => new Address
             {
                 Id = a.Id,
                 Country = a.Country,
@@ -29,7 +32,7 @@ namespace LibrarySystem.Service.PeopleService
                 Building = a.Building,
                 Flat = a.Flat,
                 Floor = a.Floor,
-            }).FirstOrDefault();
+            }).FirstOrDefaultAsync();
 
             if (address == null)
             {
@@ -46,7 +49,6 @@ namespace LibrarySystem.Service.PeopleService
 
         public async Task<IEnumerable<CustomerDto>> GetAllCustomersAsync()
         {
-            AddressService srv = new AddressService();
             var customers = await _context.TbCustomers.Select(c => new CustomerDto
             {
                 Id = c.Id,
@@ -55,7 +57,7 @@ namespace LibrarySystem.Service.PeopleService
                 Email = c.Email,
                 PhoneNumber = c.PhoneNumber,
                 MembershipType = c.MembershipType,
-                Address = srv.GetAddressByIdAsync(c.AddressId).Result,
+                Address = _addressService.GetAddressByIdAsync(c.AddressId).Result,
 
             }).ToListAsync();
 
@@ -68,7 +70,6 @@ namespace LibrarySystem.Service.PeopleService
 
         public async Task<CustomerDto?> GetCustomerByIdAsync(int id)
         {
-            AddressService srv = new AddressService();
 
             var customer = await _context.TbCustomers.Select(c => new CustomerDto
             {
@@ -78,7 +79,7 @@ namespace LibrarySystem.Service.PeopleService
                 Email = c.Email,
                 PhoneNumber = c.PhoneNumber,
                 MembershipType = c.MembershipType,
-                Address = srv.GetAddressByIdAsync(c.AddressId).Result,
+                Address = _addressService.GetAddressByIdAsync(c.AddressId).Result,
             }).FirstOrDefaultAsync(c => c.Id == id);
 
             if (customer == null)
@@ -126,7 +127,7 @@ namespace LibrarySystem.Service.PeopleService
 
             var address = GetAddressAsync(dto.AddressId);
 
-            var customer = _context.TbCustomers.FirstOrDefault(c => c.Id == id);
+            var customer = await _context.TbCustomers.FirstOrDefaultAsync(c => c.Id == id);
             if (customer == null)
             {
                 throw new Exception($"Customer with ID {id} not found.");
@@ -154,7 +155,7 @@ namespace LibrarySystem.Service.PeopleService
 
         public async Task DeleteCustomerAsync(int id)
         {
-            var customer = _context.TbCustomers.FirstOrDefault(c => c.Id == id);
+            var customer = await _context.TbCustomers.FirstOrDefaultAsync(c => c.Id == id);
             if (customer == null)
             {
                 throw new Exception($"Customer with ID {id} not found.");
@@ -165,7 +166,7 @@ namespace LibrarySystem.Service.PeopleService
 
         public async Task ChangeMembershipTypeAsync(int id, MembershipType type)
         {
-            var customer = _context.TbCustomers.FirstOrDefault(c => c.Id == id);
+            var customer = await _context.TbCustomers.FirstOrDefaultAsync(c => c.Id == id);
             if (customer == null)
             {
                 throw new Exception($"Customer with ID {id} not found.");
