@@ -14,27 +14,45 @@ namespace LibrarySystem.Service
             _context = context;
         }
 
-        public async Task BorrowBookAsync(CreateOperationDto operationDto)
+        private async Task CheckNullAsync(int customerId, int employeeId, int bookId)
         {
-            var book = await _context.TbBooksCopies
-                .Where(a => a.BookId == operationDto.BookId && a.Status == Status.Available)
-                .FirstOrDefaultAsync();
-
+           var customer = await _context.TbCustomers.FindAsync(customerId);
+            if (customer == null)
+            {
+                throw new ArgumentException($"Customer with ID {customerId} does not exist.");
+            }
+            var employee = await _context.TbEmployees.FindAsync(employeeId);
+            if (employee == null)
+            {
+                throw new ArgumentException($"Employee with ID {employeeId} does not exist.");
+            }
+            var book = await _context.TbBooks.FindAsync(bookId);
             if (book == null)
             {
-                throw new InvalidOperationException($"Book with ID {operationDto.BookId} is not available for borrowing,No copies available.");
+                throw new ArgumentException($"Book with ID {bookId} does not exist.");
             }
+
+        }
+
+        public async Task BorrowBookAsync(CreateOperationDto operationDto)
+        {
+            await CheckNullAsync(operationDto.CustomerId, operationDto.EmployeeId, operationDto.BookId);
 
             var operation = new Operation
             {
                 CustomerId = operationDto.CustomerId,
                 EmployeeId = operationDto.EmployeeId, // Using the provided employee ID
-                BookCopyId= book.Id, // Assign the ID of the available book copy
+                BookCopyId= operationDto.BookId, // Assign the ID of the available book copy
                 DeadLine = operationDto.DeadLine,
                 PaymentMethod = operationDto.PaymentMethod,
                 OperationType = operationDto.OperationType
             };
-            book.Status = Status.Borrowed;
+            var bookCopy = await _context.TbBooksCopies.FindAsync(operationDto.BookId);
+            if (bookCopy == null || bookCopy.Status == Status.Available)
+            {
+                throw new InvalidOperationException($"Book copy with ID {operationDto.BookId} is not available for borrowing.");
+            }
+            bookCopy.Status = Status.Borrowed;
             await _context.TbOperations.AddAsync(operation);
             await _context.SaveChangesAsync();
 
@@ -61,13 +79,16 @@ namespace LibrarySystem.Service
 
         public async Task BuyBookAsync(CreateOperationDto operationDto)
         {
+            await CheckNullAsync(operationDto.CustomerId, operationDto.EmployeeId, operationDto.BookId);
+
             var book = await _context.TbBooksCopies
                 .Where(a => a.BookId == operationDto.BookId && a.Status == Status.Available)
                 .FirstOrDefaultAsync();
             if (book == null)
             {
-                throw new InvalidOperationException($"Book with ID {operationDto.BookId} is not available for buying,No copies available.");
+                throw new InvalidOperationException($"No available copies for book with ID {operationDto.BookId}.");
             }
+          
             var operation = new Operation
             {
                 CustomerId = operationDto.CustomerId,
