@@ -14,7 +14,7 @@ namespace LibrarySystem.Models
         public string Password { get; set; } = null!;
         public DateTime RegisterationDate { get; set; }
 
-        // Many-to-many relation (PersonsAddresses in the diagram)
-        public ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
+        public Address Address { get; set; } = null!;
+        public int AddressId { get; set; } // Foreign key for Address
     }
 }

@@ -32,12 +32,16 @@ namespace LibrarySystem.Data.Configurations
             builder.Property(b => b.Description)    //Description
                 .IsRequired()
                 .HasMaxLength(1000);
-                //Category
+                //set indexes 
+
+                builder.HasIndex(b => b.ISBN) // Index on ISBN
+                .IsUnique(); // Unique index
+
 
 
             //Set relations
 
-           builder.HasOne(b => b.Category)      // Relation to Category
+            builder.HasOne(b => b.Category)      // Relation to Category
                 .WithMany(c => c.Books);
            
         }

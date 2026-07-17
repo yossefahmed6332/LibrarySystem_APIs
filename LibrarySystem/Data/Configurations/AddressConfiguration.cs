@@ -26,9 +26,7 @@ namespace LibrarySystem.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(100);
 
-            //set relations
-            builder.HasOne(a => a.Person)         // Relation to Person
-                .WithMany(p => p.Addresses);
+         
 
         }
     }

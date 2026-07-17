@@ -7,7 +7,7 @@ namespace LibrarySystem.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            //set propqerties
+            //set properties 
             builder.Property(a => a.FirstName)  //set first name
                 .IsRequired()
                 .HasMaxLength(50); 
@@ -24,6 +24,18 @@ namespace LibrarySystem.Data.Configurations
                 .IsRequired();
             builder.Property(a => a.RegisterationDate)      //set registeration date
                 .IsRequired();
+
+            //set indexes 
+            builder.HasIndex(a => a.Email) //set email index
+                .IsUnique();
+            builder.HasIndex(a => a.PhoneNumber)
+                .IsUnique(); 
+
+            //relations 
+            builder.HasOne(a => a.Address) //set address
+                .WithMany(a=> a.Persons)
+                .HasForeignKey(a => a.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
         }

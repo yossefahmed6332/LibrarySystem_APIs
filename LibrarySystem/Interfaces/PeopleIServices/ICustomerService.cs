@@ -5,16 +5,16 @@ namespace LibrarySystem.Interfaces.PeopleServices
 {
     public interface ICustomerService 
     {
-        Task<IEnumerable<CustomerDto>> GetAllAsync();
+        public Task<IEnumerable<CustomerDto>> GetAllCustomersAsync();
 
-        Task<CustomerDto?> GetByIdAsync(int id);
+        public Task<CustomerDto?> GetCustomerByIdAsync(int id);
 
-        Task<CustomerDto> CreateAsync(CreateCustomerDto dto);
+        public Task<CustomerDto> CreateCustomerAsync(CreateCustomerDto dto);
 
-        Task<CustomerDto> UpdateAsync(int id, UpdateCustomerDto dto);
+        public Task<CustomerDto> UpdateCustomerAsync(int id, UpdateCustomerDto dto);
 
-        Task DeleteAsync(int id);
+        public Task DeleteCustomerAsync(int id);
 
-        Task ChangeMembershipTypeAsync(int id, MembershipType type);
+        public Task ChangeMembershipTypeAsync(int id, MembershipType type);
     }
 }
