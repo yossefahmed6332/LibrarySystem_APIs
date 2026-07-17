@@ -14,6 +14,6 @@ public abstract class PersonDto
 
     public DateTime RegisterationDate { get; set; }
 
-    public ICollection<AddressDto> Addresses { get; set; } = new List<AddressDto>();
-}
+    public AddressDto Address { get; set; } = null!;
+    }
 }

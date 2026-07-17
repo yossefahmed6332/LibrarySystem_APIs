@@ -1,8 +1,8 @@
 ﻿using LibrarySystem.Data;
-using LibrarySystem.Interfaces.PeopleServices;
 using LibrarySystem.DTOs.People.CustomerDtos;
+using LibrarySystem.Interfaces.PeopleServices;
+using LibrarySystem.Models;
 using Microsoft.EntityFrameworkCore;
-using LibrarySystem.Models; 
 namespace LibrarySystem.Service.PeopleService
 {
     public class CustomerService : ICustomerService
@@ -13,17 +13,53 @@ namespace LibrarySystem.Service.PeopleService
             _context = context;
         }
 
+
+       
+
+        public async Task< Address> GetAddressAsync(int id)
+        {
+            var address = _context.TbAddresses.Where(a => a.Id == id).Select(a => new Address
+            {
+                Id = a.Id,
+                Country = a.Country,
+                State = a.State,
+                City = a.City,
+                StreetNum = a.StreetNum,
+                StreetName = a.StreetName,
+                Building = a.Building,
+                Flat = a.Flat,
+                Floor = a.Floor,
+            }).FirstOrDefault();
+
+            if (address == null)
+            {
+                throw new Exception($"Address with Id{id} not found");
+            }
+
+            return address;
+        }
+
+
+
+
+
+
         public async Task<IEnumerable<CustomerDto>> GetAllCustomersAsync()
         {
-            var customers = await  _context.TbCustomers.Select(c => new CustomerDto
+            AddressService srv = new AddressService();
+            var customers = await _context.TbCustomers.Select(c => new CustomerDto
             {
                 Id = c.Id,
                 FirstName = c.FirstName,
                 LastName = c.LastName,
-                Email= c.Email,
+                Email = c.Email,
                 PhoneNumber = c.PhoneNumber,
                 MembershipType = c.MembershipType,
+                Address = srv.GetAddressByIdAsync(c.AddressId).Result,
+
             }).ToListAsync();
+
+
 
             return customers;
 
@@ -32,6 +68,8 @@ namespace LibrarySystem.Service.PeopleService
 
         public async Task<CustomerDto?> GetCustomerByIdAsync(int id)
         {
+            AddressService srv = new AddressService();
+
             var customer = await _context.TbCustomers.Select(c => new CustomerDto
             {
                 Id = c.Id,
@@ -40,6 +78,7 @@ namespace LibrarySystem.Service.PeopleService
                 Email = c.Email,
                 PhoneNumber = c.PhoneNumber,
                 MembershipType = c.MembershipType,
+                Address = srv.GetAddressByIdAsync(c.AddressId).Result,
             }).FirstOrDefaultAsync(c => c.Id == id);
 
             if (customer == null)
@@ -51,15 +90,24 @@ namespace LibrarySystem.Service.PeopleService
         }
 
         public async Task<CustomerDto> CreateCustomerAsync(CreateCustomerDto dto)
+
         {
-            var customer = new Models.Customer
+            var Address = GetAddressAsync(dto.AddressId);
+
+            if (Address == null)
+            { 
+                throw new Exception($"Address with ID {dto.AddressId} is not a valid address");
+            }
+            var customer = new Customer
             {
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
                 MembershipType = dto.MembershipType,
-            };
+                Address = Address.Result
+
+            }; 
             _context.TbCustomers.Add(customer);
             await _context.SaveChangesAsync();
             return new CustomerDto
@@ -75,6 +123,9 @@ namespace LibrarySystem.Service.PeopleService
 
         public async Task<CustomerDto> UpdateCustomerAsync(int id, UpdateCustomerDto dto)
         {
+
+            var address = GetAddressAsync(dto.AddressId);
+
             var customer = _context.TbCustomers.FirstOrDefault(c => c.Id == id);
             if (customer == null)
             {
@@ -85,6 +136,7 @@ namespace LibrarySystem.Service.PeopleService
             customer.Email = dto.Email;
             customer.PhoneNumber = dto.PhoneNumber;
             customer.MembershipType = dto.MembershipType;
+            customer.Address = address.Result; 
             _context.TbCustomers.Update(customer);
             await _context.SaveChangesAsync();
 

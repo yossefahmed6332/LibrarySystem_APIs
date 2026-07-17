@@ -14,5 +14,7 @@ namespace LibrarySystem.DTOs.People.PersonDtos
         public string Email { get; set; } = null!;
         [Required, MaxLength(100)]
         public string Password { get; set; } = null!;
+        [Required, Range(1, int.MaxValue)]
+        public int AddressId { get; set; }
     }
 }

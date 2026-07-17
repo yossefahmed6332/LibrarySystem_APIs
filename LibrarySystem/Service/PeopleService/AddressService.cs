@@ -9,10 +9,7 @@ namespace LibrarySystem.Service.PeopleService
     {
 
         private readonly LibraryDbContext _context;
-        public AddressService(LibraryDbContext context)
-        {
-            _context = context;
-        }
+        
 
         public async Task<IEnumerable<AddressDto>> GetAllAddressesAsync()
         {
