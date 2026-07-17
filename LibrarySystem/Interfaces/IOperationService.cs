@@ -4,19 +4,25 @@ namespace LibrarySystem.Interfaces
     public interface IOperationService
     {
         // Borrow
-        Task<bool> BorrowBookAsync(int customerId, int bookCopyId);
+        public Task BorrowBookAsync(CreateOperationDto operationDto);
 
         // Return
-        Task<bool> ReturnBookAsync(int operationId);
+        public Task ReturnBookAsync(int operationId);
+        //Buy 
+        public Task BuyBookAsync(CreateOperationDto operationDto);
+        //Refund
+        public Task RefundBookAsync(CreateOperationDto operationDto);
 
         // Read
-        Task<IEnumerable<OperationDto>> GetAllOperationsAsync();
-        Task<OperationDto?> GetOperationByIdAsync(int operationId);
-        Task<IEnumerable<OperationDto>> GetOperationsByCustomerAsync(int customerId);
-        Task<IEnumerable<OperationDto>> GetOperationsByEmployeeAsync(int employeeId);
-        Task<IEnumerable<OperationDto>> GetActiveBorrowOperationsAsync();
-        Task<IEnumerable<OperationDto>> GetReturnedOperationsAsync();
-        Task<IEnumerable<OperationDto>> GetOverdueOperationsAsync();
+        public Task<IEnumerable<OperationDto>> GetAllOperationsAsync();
+        public Task<OperationDto?> GetOperationByIdAsync(int operationId);
+        public Task<IEnumerable<OperationDto>> GetOperationsByCustomerAsync(int customerId);
+        public Task<IEnumerable<OperationDto>> GetOperationsByEmployeeAsync(int employeeId);
+        public Task<IEnumerable<OperationDto>> GetActiveBorrowOperationsAsync();
+        public Task<IEnumerable<OperationDto>> GetReturnedOperationsAsync();
+        public Task<IEnumerable<OperationDto>> GetOperationsByBookCopyAsync(int bookCopyId);
+
+
 
     }
 }

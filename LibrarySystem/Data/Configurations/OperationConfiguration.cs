@@ -20,6 +20,8 @@ namespace LibrarySystem.Data.Configurations
                 .IsRequired();
             builder.Property(a => a.OperationType)
                 .IsRequired();
+            builder.Property(a => a.IsReturned)
+                .IsRequired();
 
             //set relations 
             builder.HasOne(a => a.Customer)

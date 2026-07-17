@@ -8,12 +8,15 @@ namespace LibrarySystem.DTOs.OperationDtos
         [Required, Range(1, int.MaxValue)]
         public int CustomerId { get; set; }
         [Required, Range(1, int.MaxValue)]
-        public int BookCopyId { get; set; }
+        public int BookId { get; set; }
+        [Required, Range(1, int.MaxValue)]
+        public int EmployeeId { get; set; }
         [Required]
         public DateTime DeadLine { get; set; }
         [Required, EnumDataType(typeof(PaymentMethod))]
         public PaymentMethod PaymentMethod { get; set; }
         [Required, EnumDataType(typeof(OperationType))]
         public OperationType OperationType { get; set; }
+   
     }
 }

@@ -13,7 +13,8 @@ namespace LibrarySystem.Models
     {
         Sold,
         Borrowed,
-        Available
+        Available,
+        Broken
     }
 
     public enum PaymentMethod

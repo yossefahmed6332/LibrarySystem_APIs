@@ -20,5 +20,19 @@ namespace LibrarySystem.Models
         public DateTime DeadLine { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public OperationType OperationType { get; set; }
+        public bool IsReturned { get; set; } 
+
+        public Operation()
+        {
+            if (OperationType == OperationType.Borrow)
+            {
+                IsReturned = false;
+            }
+            else
+            {
+                IsReturned = true;
+            }
+
+        }
     }
 }
