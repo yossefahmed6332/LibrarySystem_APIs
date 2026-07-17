@@ -1,6 +1,10 @@
 using LibrarySystem.Data;
+using LibrarySystem.Interfaces;
+using LibrarySystem.Service;
+using LibrarySystem.Service.BookService;
+using LibrarySystem.Service.PeopleService;
 using Microsoft.EntityFrameworkCore;
-
+using LibrarySystem.Interfaces.PeopleServices;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddScoped<IOperationService, OperationService>();
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IBookCopyService, BookCopyService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 
 
 builder.Services.AddDbContext<LibraryDbContext>(options =>
@@ -19,6 +31,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
 
 app.UseHttpsRedirection();
 

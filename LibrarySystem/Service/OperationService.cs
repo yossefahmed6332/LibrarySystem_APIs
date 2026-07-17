@@ -29,7 +29,7 @@ namespace LibrarySystem.Service
             {
                 CustomerId = operationDto.CustomerId,
                 EmployeeId = operationDto.EmployeeId, // Using the provided employee ID
-
+                BookCopyId= book.Id, // Assign the ID of the available book copy
                 DeadLine = operationDto.DeadLine,
                 PaymentMethod = operationDto.PaymentMethod,
                 OperationType = operationDto.OperationType
@@ -92,6 +92,15 @@ namespace LibrarySystem.Service
                 PaymentMethod = operationDto.PaymentMethod,
                 OperationType = OperationType.Refund
             };
+            var bookCopy = await _context.TbBooksCopies
+                .Where(b => b.Id == operationDto.BookId)
+                .FirstOrDefaultAsync();
+            if (bookCopy == null)
+            {
+                throw new Exception($"Book copy with ID {operationDto.BookId} not found.");
+            }
+            bookCopy.Status = Status.Available;
+
             await _context.TbOperations.AddAsync(operation);
             await _context.SaveChangesAsync();
         }
