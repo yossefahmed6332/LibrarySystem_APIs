@@ -16,6 +16,28 @@ namespace LibrarySystem.Service.PeopleService
             _addressService = addressService;
         }
 
+        public async Task RegisterCustomerAsync(CreateCustomerDto dto)
+        {
+            var user = await _context.TbCustomers.FirstOrDefaultAsync(u => u.Email == dto.Email);
+            if (!(user == null))
+            {
+                throw new Exception($"Customer with email {dto.Email} already exists.");
+
+            }
+            var address = await _addressService.GetAddressByIdAsync(dto.a);
+            if (address == null)
+            {
+
+                
+            }
+           
+
+
+        }
+        
+
+        
+
 
        
 
@@ -90,37 +112,7 @@ namespace LibrarySystem.Service.PeopleService
             return customer;
         }
 
-        public async Task<CustomerDto> CreateCustomerAsync(CreateCustomerDto dto)
-
-        {
-            var Address = GetAddressAsync(dto.AddressId);
-
-            if (Address == null)
-            { 
-                throw new Exception($"Address with ID {dto.AddressId} is not a valid address");
-            }
-            var customer = new Customer
-            {
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                Email = dto.Email,
-                PhoneNumber = dto.PhoneNumber,
-                MembershipType = dto.MembershipType,
-                Address = Address.Result
-
-            }; 
-            _context.TbCustomers.Add(customer);
-            await _context.SaveChangesAsync();
-            return new CustomerDto
-            {
-                Id = customer.Id,
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
-                Email = customer.Email,
-                PhoneNumber = customer.PhoneNumber,
-                MembershipType = customer.MembershipType,
-            };
-        }
+     
 
         public async Task<CustomerDto> UpdateCustomerAsync(int id, UpdateCustomerDto dto)
         {

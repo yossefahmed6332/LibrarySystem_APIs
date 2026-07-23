@@ -5,11 +5,12 @@ namespace LibrarySystem.Interfaces.PeopleServices
 {
     public interface ICustomerService 
     {
+        public Task RegisterCustomerAsync(CreateCustomerDto dto);
         public Task<IEnumerable<CustomerDto>> GetAllCustomersAsync();
+
 
         public Task<CustomerDto?> GetCustomerByIdAsync(int id);
 
-        public Task<CustomerDto> CreateCustomerAsync(CreateCustomerDto dto);
 
         public Task<CustomerDto> UpdateCustomerAsync(int id, UpdateCustomerDto dto);
 

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using LibrarySystem.DTOs.People.AddressDtos;
 
 namespace LibrarySystem.DTOs.People.PersonDtos
 {
@@ -15,6 +16,6 @@ namespace LibrarySystem.DTOs.People.PersonDtos
         [Required, MaxLength(100)]
         public string Password { get; set; } = null!;
         [Required, Range(1, int.MaxValue)]
-        public int AddressId { get; set; }
+        public AddressDto Address{ get; set; } = null!; 
     }
 }
