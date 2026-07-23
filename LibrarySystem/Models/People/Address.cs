@@ -17,6 +17,6 @@ namespace LibrarySystem.Models
 
         // one-to-one relation (PersonsAddresses in the diagram)
 
-        public ICollection<Person> Persons { get; set; } = new HashSet<Person>();
+        public ICollection<User> Users { get; set; } = new HashSet<User>();
     }
 }

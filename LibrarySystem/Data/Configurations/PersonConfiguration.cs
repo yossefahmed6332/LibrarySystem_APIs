@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace LibrarySystem.Data.Configurations
 {
-    public class PersonConfiguration : IEntityTypeConfiguration<Person>
+    public class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Person> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             //set properties 
             builder.Property(a => a.FirstName)  //set first name
@@ -20,7 +20,7 @@ namespace LibrarySystem.Data.Configurations
             builder.Property(a => a.Email)      //set email
                 .IsRequired()
                 .HasMaxLength(150);
-            builder.Property(a=>a.Password)     //set password
+            builder.Property(a=>a.PasswordHash)     //set password
                 .IsRequired();
             builder.Property(a => a.RegisterationDate)      //set registeration date
                 .IsRequired();
@@ -33,7 +33,7 @@ namespace LibrarySystem.Data.Configurations
 
             //relations 
             builder.HasOne(a => a.Address) //set address
-                .WithMany(a=> a.Persons)
+                .WithMany(a=> a.Users)
                 .HasForeignKey(a => a.AddressId)
                 .OnDelete(DeleteBehavior.Restrict);
 

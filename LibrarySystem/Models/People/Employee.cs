@@ -1,6 +1,6 @@
 namespace LibrarySystem.Models
 {
-    public class Employee : Person
+    public class Employee : User
     {
         public decimal SalaryPerHour { get; set; }
         public int HoursWorked { get; set; }

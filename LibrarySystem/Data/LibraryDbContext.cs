@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using LibrarySystem.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 namespace LibrarySystem.Data
 {
-    public class LibraryDbContext:DbContext
+    public class LibraryDbContext:IdentityDbContext<User,IdentityRole<int>,int>
     {
         public LibraryDbContext(DbContextOptions<LibraryDbContext> options) : base(options)
         {
 
-        }
-       
+        }       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(LibraryDbContext).Assembly);

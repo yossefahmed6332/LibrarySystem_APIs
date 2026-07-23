@@ -1,7 +1,7 @@
 
 namespace LibrarySystem.Models
 {
-    public class Customer : Person
+    public class Customer : User
     {
         public MembershipType MembershipType { get; set; }
 
