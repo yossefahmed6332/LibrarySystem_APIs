@@ -1,15 +1,16 @@
 ﻿using LibrarySystem.DTOs.People.PersonDtos;
 using LibrarySystem.Models;
-using LibrarySystem.DTOs.OperationDtos;
+using System.ComponentModel.DataAnnotations;
 namespace LibrarySystem.DTOs.People.EmployeesDtos
 {
-    public class EmployeeDto:PersonDto
+    public class CreateEmployeeDto : CreateUserDto
     {
+        [Required,Range(1.00,20000.00)]
         public decimal SalaryPerHour { get; set; }
+        [Required,Range(0,int.MaxValue)]
         public int HoursWorked { get; set; }
+        [Required, EnumDataType(typeof(Role))]
         public Role Role { get; set; }
-        public ICollection<OperationDto> Operations { get; set; } = new HashSet<OperationDto>();
-
 
     }
 }

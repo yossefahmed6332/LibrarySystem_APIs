@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibrarySystem.Interfaces;
 using LibrarySystem.DTOs.AuthorDtos;
+using Microsoft.AspNetCore.Authorization;
 namespace LibrarySystem.Controllers.BooksControllers
 {
     [Route("api/[controller]")]
@@ -12,6 +13,7 @@ namespace LibrarySystem.Controllers.BooksControllers
         {
             _authorService = authorService;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {   
@@ -25,18 +27,24 @@ namespace LibrarySystem.Controllers.BooksControllers
             return Ok(author);
         }
 
+        [Authorize(Roles = "Admin"),Authorize(Roles = "Librarian")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateAuthorDto dto)
         {
             var author = await _authorService.CreateAuthorAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = author.Id }, author);
         }
+        [Authorize(Roles = "Admin"), Authorize(Roles = "Librarian")]
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateAuthorDto dto)
         {
             var author = await _authorService.UpdateAuthorAsync(id, dto);
             return Ok(author);
         }
+
+
+        [Authorize(Roles = "Admin"), Authorize(Roles = "Librarian")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

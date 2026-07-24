@@ -8,8 +8,6 @@ namespace LibrarySystem.Interfaces.PeopleServices
 
         public Task<EmployeeDto> GetEmployeeByIdAsync(int id);
 
-        public Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto dto);
-
         public  Task<EmployeeDto> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto);
 
         public Task DeleteEmployeeAsync(int id);

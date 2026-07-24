@@ -2,6 +2,7 @@
 using LibrarySystem.DTOs.People.CustomerDtos;
 using LibrarySystem.Interfaces.PeopleServices;
 using LibrarySystem.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 namespace LibrarySystem.Service.PeopleService
 {
@@ -9,32 +10,16 @@ namespace LibrarySystem.Service.PeopleService
     {
         private readonly LibraryDbContext _context;
         private readonly IAddressService _addressService;
+        private readonly UserManager<User> _userManager;
 
-        public CustomerService(LibraryDbContext context, IAddressService addressService)
+
+        public CustomerService(LibraryDbContext context, IAddressService addressService, UserManager<User> userManager)
         {
             _context = context;
             _addressService = addressService;
+            _userManager = userManager;
         }
 
-        public async Task RegisterCustomerAsync(CreateCustomerDto dto)
-        {
-            var user = await _context.TbCustomers.FirstOrDefaultAsync(u => u.Email == dto.Email);
-            if (!(user == null))
-            {
-                throw new Exception($"Customer with email {dto.Email} already exists.");
-
-            }
-            var address = await _addressService.GetAddressByIdAsync(dto.a);
-            if (address == null)
-            {
-
-                
-            }
-           
-
-
-        }
-        
 
         
 
@@ -117,22 +102,29 @@ namespace LibrarySystem.Service.PeopleService
         public async Task<CustomerDto> UpdateCustomerAsync(int id, UpdateCustomerDto dto)
         {
 
-            var address = GetAddressAsync(dto.AddressId);
+            var address = await GetAddressAsync(dto.Address.Id);
 
             var customer = await _context.TbCustomers.FirstOrDefaultAsync(c => c.Id == id);
+
             if (customer == null)
             {
                 throw new Exception($"Customer with ID {id} not found.");
             }
+
             customer.FirstName = dto.FirstName;
             customer.LastName = dto.LastName;
             customer.Email = dto.Email;
             customer.PhoneNumber = dto.PhoneNumber;
             customer.MembershipType = dto.MembershipType;
-            customer.Address = address.Result; 
-            _context.TbCustomers.Update(customer);
-            await _context.SaveChangesAsync();
+            customer.AddressId = address.Id;
+            
 
+            var result = await _userManager.UpdateAsync(customer);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+            }
             return new CustomerDto
             {
                 Id = customer.Id,

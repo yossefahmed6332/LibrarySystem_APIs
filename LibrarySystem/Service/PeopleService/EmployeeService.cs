@@ -3,15 +3,20 @@ using LibrarySystem.DTOs.People.EmployeesDtos;
 using LibrarySystem.Interfaces.PeopleServices;
 using Microsoft.EntityFrameworkCore;
 using LibrarySystem.Models;
+using Microsoft.AspNetCore.Identity;
 namespace LibrarySystem.Service.PeopleService
 {
     public class EmployeeService : IEmployeeService
     {
         private readonly LibraryDbContext _context;
+        private readonly IAddressService _addressService;
+        private readonly UserManager<User> _userManager;
 
-        public EmployeeService(LibraryDbContext context)
+        public EmployeeService(LibraryDbContext context, UserManager<User> userManager, IAddressService addressService)
         {
             _context = context;
+            _userManager = userManager;
+            _addressService = addressService;
         }
         public async Task<IEnumerable<EmployeeDto>> GetAllEmployeesAsync()
         {
@@ -73,33 +78,7 @@ namespace LibrarySystem.Service.PeopleService
             return employee;
         }
 
-        public async Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto dto)
-        {
-            var employee = new Employee
-            {
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                Email = dto.Email,
-                PhoneNumber = dto.PhoneNumber,
-                Role = dto.Role,
-                HoursWorked = dto.HoursWorked,
-                SalaryPerHour = dto.SalaryPerHour,
-            };
-            _context.TbEmployees.Add(employee);
-            await _context.SaveChangesAsync();
-            return new EmployeeDto
-            {
-                Id = employee.Id,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Email = employee.Email,
-                PhoneNumber = employee.PhoneNumber,
-                Role = employee.Role,
-                SalaryPerHour = employee.SalaryPerHour,
-                HoursWorked = employee.HoursWorked
-            };
 
-        }
 
         public async Task<EmployeeDto> UpdateEmployeeAsync(int id, UpdateEmployeeDto dto)
         {
@@ -116,7 +95,12 @@ namespace LibrarySystem.Service.PeopleService
             employee.Role = dto.Role;
             employee.SalaryPerHour = dto.SalaryPerHour;
 
-            await _context.SaveChangesAsync();
+            var result = await _userManager.UpdateAsync(employee);
+            if (!result.Succeeded)
+            {
+                throw new Exception($"Failed to update employee with ID {id}. Errors: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            }   
+
             return new EmployeeDto
             {
                 Id = employee.Id,

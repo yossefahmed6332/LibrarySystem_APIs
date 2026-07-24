@@ -1,6 +1,7 @@
 ﻿using LibrarySystem.DTOs.People.CustomerDtos;
 using LibrarySystem.Interfaces.PeopleServices;
 using LibrarySystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibrarySystem.Controllers
@@ -16,6 +17,7 @@ namespace LibrarySystem.Controllers
             _customerService = customerService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -23,6 +25,7 @@ namespace LibrarySystem.Controllers
             return Ok(customers);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -30,17 +33,7 @@ namespace LibrarySystem.Controllers
             return Ok(customer);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateCustomerDto dto)
-        {
-            var customer = await _customerService.CreateCustomerAsync(dto);
-
-            return CreatedAtAction(
-                nameof(GetById),
-                new { id = customer.Id },
-                customer);
-        }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, UpdateCustomerDto dto)
         {
@@ -49,6 +42,7 @@ namespace LibrarySystem.Controllers
             return Ok(customer);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -57,6 +51,7 @@ namespace LibrarySystem.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPatch("{id}/membership")]
         public async Task<IActionResult> ChangeMembershipType(
             int id,

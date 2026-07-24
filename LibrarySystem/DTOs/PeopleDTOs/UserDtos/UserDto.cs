@@ -1,6 +1,6 @@
 ﻿using LibrarySystem.DTOs.People.AddressDtos;
 namespace LibrarySystem.DTOs.People.PersonDtos { 
-public abstract class PersonDto
+public abstract class UserDto
 {
     public int Id { get; set; }
 

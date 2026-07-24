@@ -3,7 +3,7 @@ using LibrarySystem.Models;
 using System.ComponentModel.DataAnnotations;
 namespace LibrarySystem.DTOs.People.EmployeesDtos
 {
-    public class UpdateEmployeeDto : UpdatePersonDto
+    public class UpdateEmployeeDto : UpdateUserDto
     {
         [Required,Range(1.00,20000.00)]
         public decimal SalaryPerHour { get; set; }

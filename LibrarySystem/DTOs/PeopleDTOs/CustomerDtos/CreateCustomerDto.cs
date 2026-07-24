@@ -3,7 +3,7 @@ using LibrarySystem.Models;
 using System.ComponentModel.DataAnnotations;
 namespace LibrarySystem.DTOs.People.CustomerDtos
 {
-    public class CreateCustomerDto :CreatePersonDto
+    public class CreateCustomerDto :CreateUserDto
     {
         [Required,EnumDataType(typeof(MembershipType))]
         public MembershipType MembershipType { get; set; }

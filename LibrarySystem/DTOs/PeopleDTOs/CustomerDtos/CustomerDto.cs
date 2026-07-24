@@ -4,7 +4,7 @@ using LibrarySystem.DTOs.OperationDtos;
 using System.ComponentModel.DataAnnotations;
 namespace LibrarySystem.DTOs.People.CustomerDtos
 {
-    public class CustomerDto : PersonDto
+    public class CustomerDto : UserDto
     {
         [Required, EnumDataType(typeof(MembershipType))]
         public MembershipType MembershipType { get; set; }

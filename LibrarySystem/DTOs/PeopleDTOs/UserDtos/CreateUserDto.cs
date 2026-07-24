@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using LibrarySystem.DTOs.People.AddressDtos;
-
 namespace LibrarySystem.DTOs.People.PersonDtos
 {
-    public abstract class UpdatePersonDto
+    public abstract class CreateUserDto
     {
         [Required, MaxLength(25)]
         public string FirstName { get; set; } = null!;
@@ -16,6 +17,7 @@ namespace LibrarySystem.DTOs.People.PersonDtos
         [Required, MaxLength(100)]
         public string Password { get; set; } = null!;
         [Required, Range(1, int.MaxValue)]
-        public AddressDto Address{ get; set; } = null!; 
+        public AddressDto Address { get; set; } = null!; 
+
     }
 }
